@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личный кабинет | EcoMap</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Montserrat,sans-serif;
+}
+
+body{
+background:#07120e;
+color:white;
+min-height:100vh;
+}
+
+header{
+padding:25px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(20px);
+}
+
+.logo{
+font-size:32px;
+font-weight:800;
+color:#35ff9d;
+}
+
+.container{
+padding:50px 8%;
+}
+
+.welcome{
+font-size:42px;
+margin-bottom:40px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,.08);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 25px rgba(53,255,157,.2);
+}
+
+.card h3{
+margin-bottom:15px;
+color:#35ff9d;
+}
+
+.btn{
+display:inline-block;
+margin-top:15px;
+padding:15px 25px;
+border-radius:50px;
+text-decoration:none;
+background:#35ff9d;
+color:#03100b;
+font-weight:700;
+}
+
+.stats{
+margin-top:50px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.stat{
+padding:25px;
+border-radius:20px;
+background:rgba(255,255,255,.05);
+text-align:center;
+}
+
+.stat h2{
+color:#35ff9d;
+font-size:42px;
+}
+
+</style>
+</head>
+    <script>
+
+if(localStorage.getItem('loggedIn') !== 'true'){
+
+window.location.href = 'login.html';
+
+}
+
+</script>
+    <script>
+
+function logout(){
+
+localStorage.removeItem('loggedIn');
+
+window.location.href = 'index.html';
+
+}
+
+</script>
+<body>
+
+<header>
+<div class="logo">EcoMap</div>
+<a href="#" onclick="logout()">
+Выход
+</a>
+</header>
+
+<div class="container">
+
+<h1 class="welcome">
+Добро пожаловать!
+</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>♻ Разместить отходы</h3>
+<p>Создать новое объявление о вторсырье.</p>
+
+<a href="create-waste.html" class="btn">
+Создать
+</a>
+</div>
+
+<div class="card">
+
+<h3>📦 Мои объявления</h3>
+
+<p>
+Просмотр созданных объявлений.
+</p>
+
+<a href="my-listings.html" class="btn">
+Открыть
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>🗺 Карта вторсырья</h3>
+
+<p>
+Поиск объявлений и пунктов приема.
+</p>
+
+<a href="map.html" class="btn">
+Карта
+</a>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>8</h2>
+<p>Размещено объявлений</p>
+</div>
+
+<div class="stat">
+<h2>420 кг</h2>
+<p>Передано на переработку</p>
+</div>
+
+<div class="stat">
+<h2>54 кг</h2>
+<p>Сохранено CO₂</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

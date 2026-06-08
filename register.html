@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Регистрация | EcoMap</title>
+
+<style>
+body{
+background:#07120e;
+font-family:Montserrat,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.box{
+width:450px;
+padding:40px;
+background:rgba(255,255,255,.05);
+border-radius:25px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+background:#13231c;
+color:white;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#35ff9d;
+border:none;
+border-radius:12px;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h2>Регистрация</h2>
+
+<input placeholder="Имя">
+
+<input placeholder="Email">
+
+<input placeholder="Телефон">
+
+<input placeholder="Пароль">
+
+<button onclick="window.location.href='cabinet.html'">
+    Создать аккаунт
+</button>
+
+</div>
+<script>
+function register(){
+
+const user = {
+name: document.getElementById('name').value,
+email: document.getElementById('email').value,
+phone: document.getElementById('phone').value,
+password: document.getElementById('password').value
+};
+
+localStorage.setItem('ecomap_user', JSON.stringify(user));
+
+alert('Аккаунт создан');
+
+window.location.href = 'login.html';
+}
+</script>
+</body>
+</html>

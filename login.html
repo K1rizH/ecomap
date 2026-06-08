@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoMap | Авторизация</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#07120e;
+overflow:hidden;
+}
+
+/* Фон */
+
+body::before{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,rgba(0,255,150,.25),transparent 35%),
+radial-gradient(circle at 80% 30%,rgba(0,200,255,.15),transparent 25%),
+radial-gradient(circle at 50% 80%,rgba(0,255,100,.15),transparent 35%);
+z-index:-2;
+}
+
+/* Сетка */
+
+.grid{
+position:absolute;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(rgba(0,255,100,.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,100,.05) 1px, transparent 1px);
+background-size:50px 50px;
+animation:gridMove 15s linear infinite;
+z-index:-1;
+}
+
+@keyframes gridMove{
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(50px);
+}
+}
+
+/* Карточка */
+
+.login-box{
+width:420px;
+padding:45px;
+border-radius:30px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.1);
+box-shadow:0 0 40px rgba(0,255,150,.15);
+animation:appear 1s ease;
+}
+
+@keyframes appear{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.logo{
+text-align:center;
+font-size:38px;
+font-weight:800;
+margin-bottom:10px;
+color:#35ff9d;
+}
+
+.logo span{
+color:white;
+}
+
+.subtitle{
+text-align:center;
+color:#b7c6bf;
+margin-bottom:35px;
+}
+
+.input-group{
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:18px;
+border:none;
+outline:none;
+border-radius:15px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:15px;
+}
+
+input::placeholder{
+color:#aeb7b2;
+}
+
+button{
+width:100%;
+padding:18px;
+margin-top:10px;
+border:none;
+border-radius:15px;
+background:#35ff9d;
+color:#03100b;
+font-weight:700;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 0 25px rgba(53,255,157,.4);
+}
+
+button:hover{
+transform:translateY(-3px);
+}
+
+.links{
+margin-top:20px;
+display:flex;
+justify-content:space-between;
+}
+
+.links a{
+text-decoration:none;
+color:#35ff9d;
+font-size:14px;
+}
+
+.recycle{
+position:absolute;
+font-size:28px;
+color:#35ff9d;
+opacity:.15;
+animation:float 15s linear infinite;
+}
+
+.r1{left:10%;animation-duration:12s;}
+.r2{left:30%;animation-duration:18s;}
+.r3{left:50%;animation-duration:15s;}
+.r4{left:70%;animation-duration:11s;}
+.r5{left:90%;animation-duration:16s;}
+
+@keyframes float{
+from{
+transform:translateY(110vh) rotate(0deg);
+}
+to{
+transform:translateY(-150px) rotate(360deg);
+}
+}
+
+</style>
+</head>
+ <script>
+
+function login(){
+
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+
+const savedUser =
+JSON.parse(localStorage.getItem('ecomap_user'));
+
+if(
+savedUser &&
+savedUser.email === email &&
+savedUser.password === password
+){
+
+localStorage.setItem('loggedIn', 'true');
+
+window.location.href = 'cabinet.html';
+
+}else{
+
+alert('Неверный email или пароль');
+
+}
+
+}
+
+</script>
+<body>
+
+<div class="grid"></div>
+
+<div class="recycle r1">♻</div>
+<div class="recycle r2">♻</div>
+<div class="recycle r3">♻</div>
+<div class="recycle r4">♻</div>
+<div class="recycle r5">♻</div>
+
+<div class="login-box">
+
+<div class="logo">
+Eco<span>Map</span>
+</div>
+
+<div class="subtitle">
+Авторизация для размещения вторсырья
+</div>
+
+<form action="cabinet.html">
+
+<div class="input-group">
+<input id="email" type="email" placeholder="Электронная почта" required>
+</div>
+
+<div class="input-group">
+<input id="password" type="password" placeholder="Пароль" required>
+</div>
+
+<button type="button" onclick="login()">
+Войти
+</button>
+
+<div class="links">
+<a href="register.html">Регистрация</a>
+<a href="index.html">На главную</a>
+</div>
+ 
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<title>Мои объявления | EcoMap</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Montserrat,sans-serif;
+}
+
+body{
+background:#07120e;
+color:white;
+padding:50px;
+min-height:100vh;
+}
+
+h1{
+margin-bottom:35px;
+font-size:42px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.btn{
+padding:14px 22px;
+border-radius:15px;
+background:#35ff9d;
+color:#03100b;
+text-decoration:none;
+font-weight:700;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:25px;
+margin-bottom:20px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 20px rgba(53,255,157,.15);
+}
+
+.card h3{
+color:#35ff9d;
+margin-bottom:12px;
+font-size:24px;
+}
+
+.card p{
+margin-bottom:8px;
+color:#d4ddd8;
+}
+
+.status{
+display:inline-block;
+margin-top:10px;
+padding:8px 14px;
+border-radius:12px;
+background:rgba(53,255,157,.15);
+color:#35ff9d;
+font-weight:700;
+}
+
+.empty{
+opacity:.6;
+font-size:18px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="top">
+
+<h1>
+📦 Мои объявления
+</h1>
+
+<a href="create-waste.html" class="btn">
++ Добавить
+</a>
+
+</div>
+
+<div id="list"></div>
+
+<script>
+
+const list =
+document.getElementById('list');
+
+const wastes =
+JSON.parse(localStorage.getItem('wastes')) || [];
+
+if(wastes.length === 0){
+
+list.innerHTML = `
+<p class="empty">
+У вас пока нет объявлений
+</p>
+`;
+
+}else{
+
+wastes.forEach(item => {
+
+list.innerHTML += `
+
+<div class="card">
+
+<h3>${item.type}</h3>
+
+<p>
+Количество: ${item.amount}
+</p>
+
+<p>
+Адрес: ${item.address}
+</p>
+
+<p>
+${item.description}
+</p>
+
+<div class="status">
+${item.status}
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
