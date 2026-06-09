@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <script>
+
+if(localStorage.getItem('loggedIn') !== 'true'){
+
+alert('Сначала войдите в аккаунт');
+
+window.location.href = 'login.html';
+
+}
+
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
