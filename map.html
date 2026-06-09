@@ -208,46 +208,65 @@ attribution:'© OpenStreetMap'
 
 /* Примеры объявлений */
 
-const wastes = [
+/* Стандартные объявления */
+
+const defaultWastes = [
 
 {
 lat:60.9397,
 lng:76.5696,
-title:'Пластиковые бутылки',
-amount:'25 кг'
+type:'Пластик',
+amount:'25 кг',
+status:'Доступно'
 },
 
 {
 lat:60.9475,
 lng:76.5842,
-title:'Макулатура',
-amount:'40 кг'
+type:'Макулатура',
+amount:'40 кг',
+status:'Доступно'
 },
 
 {
 lat:60.9318,
 lng:76.5510,
-title:'Старая электроника',
-amount:'12 кг'
+type:'Электроника',
+amount:'12 кг',
+status:'Доступно'
 },
 
 {
 lat:60.9441,
 lng:76.6035,
-title:'Стекло',
-amount:'18 кг'
+type:'Стекло',
+amount:'18 кг',
+status:'Доступно'
 }
 
 ];
 
+/* Получение пользовательских */
+
+const savedWastes =
+JSON.parse(localStorage.getItem('wastes')) || [];
+
+/* Объединение */
+
 wastes.forEach(item=>{
 
 L.marker([item.lat,item.lng])
+
 .addTo(map)
+
 .bindPopup(`
-<h3>${item.title}</h3>
+
+<h3>${item.type}</h3>
+
 Количество: ${item.amount}<br>
-Статус: Доступно
+
+Статус: ${item.status || 'Доступно'}
+
 `);
 
 });
