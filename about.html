@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>О проекте | EcoMap</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:#07120e;
+color:white;
+overflow-x:hidden;
+}
+
+/* Фон */
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 20% 20%,rgba(0,255,150,.2),transparent 30%),
+radial-gradient(circle at 80% 30%,rgba(0,200,255,.12),transparent 25%),
+radial-gradient(circle at 50% 80%,rgba(0,255,100,.12),transparent 35%);
+
+z-index:-3;
+}
+
+/* Сетка */
+
+.grid{
+position:fixed;
+width:100%;
+height:100%;
+
+background-image:
+linear-gradient(rgba(0,255,100,.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,100,.05) 1px, transparent 1px);
+
+background-size:50px 50px;
+
+animation:gridMove 15s linear infinite;
+
+z-index:-2;
+}
+
+@keyframes gridMove{
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(50px);
+}
+}
+
+/* Header */
+
+header{
+position:sticky;
+top:0;
+z-index:1000;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:20px 8%;
+
+background:rgba(7,18,14,.75);
+
+backdrop-filter:blur(20px);
+
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-size:30px;
+font-weight:800;
+color:#35ff9d;
+}
+
+nav{
+display:flex;
+gap:18px;
+}
+
+nav a{
+padding:12px 20px;
+
+color:white;
+text-decoration:none;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+}
+
+nav a:hover{
+transform:translateY(-3px);
+
+color:#35ff9d;
+
+border-color:rgba(53,255,157,.35);
+
+box-shadow:0 0 25px rgba(53,255,157,.12);
+}
+
+/* Контент */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:80px 8%;
+}
+
+/* Hero */
+
+.hero{
+text-align:center;
+margin-bottom:80px;
+}
+
+.hero h1{
+font-size:64px;
+margin-bottom:25px;
+line-height:1.1;
+}
+
+.hero span{
+color:#35ff9d;
+}
+
+.hero p{
+max-width:900px;
+margin:auto;
+
+font-size:20px;
+line-height:1.9;
+
+color:#c3d0c9;
+}
+
+/* Карточки */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+margin-bottom:70px;
+}
+
+.card{
+padding:35px;
+
+border-radius:28px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+
+box-shadow:
+0 0 30px rgba(53,255,157,.15);
+}
+
+.card h3{
+font-size:24px;
+margin-bottom:18px;
+color:#35ff9d;
+}
+
+.card p{
+line-height:1.8;
+color:#d1dbd5;
+}
+
+/* Блок миссии */
+
+.mission{
+padding:50px;
+
+border-radius:35px;
+
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.06),
+rgba(255,255,255,.03)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(25px);
+}
+
+.mission h2{
+font-size:42px;
+margin-bottom:25px;
+color:#35ff9d;
+}
+
+.mission p{
+font-size:18px;
+line-height:2;
+color:#d1dbd5;
+}
+
+/* Footer */
+
+footer{
+padding:40px 8%;
+text-align:center;
+color:#8fa39a;
+}
+
+/* Адаптив */
+
+@media(max-width:1000px){
+
+.hero h1{
+font-size:46px;
+}
+
+header{
+flex-direction:column;
+gap:20px;
+}
+
+nav{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+}
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:34px;
+}
+
+.hero p{
+font-size:17px;
+}
+
+.container{
+padding-top:50px;
+}
+
+.mission{
+padding:30px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="logo">
+EcoMap
+</div>
+
+<nav>
+<a href="index.html">Главная</a>
+<a href="map.html">Карта</a>
+<a href="cabinet.html">Кабинет</a>
+<a href="my-listings.html">Мои объявления</a>
+</nav>
+
+</header>
+
+<div class="container">
+
+<section class="hero">
+
+<h1>
+О проекте
+<span>EcoMap</span>
+</h1>
+
+<p>
+EcoMap — это цифровая платформа для размещения,
+поиска и передачи вторичного сырья.
+Проект создан для упрощения взаимодействия между
+жителями, волонтерами и организациями по переработке отходов.
+Сервис способствует развитию экономики замкнутого цикла
+и снижению экологической нагрузки на окружающую среду.
+</p>
+
+</section>
+
+<section class="cards">
+
+<div class="card">
+
+<h3>
+♻ Цифровая экология
+</h3>
+
+<p>
+Платформа объединяет пользователей,
+которые хотят передать вторсырье,
+и организации, занимающиеся переработкой отходов.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🗺 Интерактивная карта
+</h3>
+
+<p>
+Все объявления отображаются на интерактивной карте,
+что позволяет быстро находить ближайшие точки сбора
+и строить маршруты до них.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🌍 Экономика замкнутого цикла
+</h3>
+
+<p>
+Проект помогает сократить объем отходов,
+направляемых на полигоны,
+и способствует повторному использованию ресурсов.
+</p>
+
+</div>
+
+</section>
+
+<section class="mission">
+
+<h2>
+Миссия проекта
+</h2>
+
+<p>
+Основная цель проекта EcoMap —
+создание современной цифровой платформы,
+которая позволит сделать процесс передачи
+и переработки вторичного сырья более удобным,
+доступным и эффективным.
+
+Сервис помогает формировать экологическую культуру,
+повышать уровень экологической ответственности населения
+и поддерживать развитие экологической инфраструктуры
+в условиях современной цифровой экономики.
+</p>
+
+</section>
+
+</div>
+
+<footer>
+
+© 2026 EcoMap — Цифровая карта вторсырья
+
+</footer>
+
+</body>
+</html>

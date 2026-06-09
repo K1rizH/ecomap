@@ -61,16 +61,25 @@ body::before{
 
 /* Навигация */
 
-nav{
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:25px 8%;
+
+    padding:20px 8%;
+
+    background:rgba(7,18,14,.75);
     backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .logo{
-    font-size:28px;
+    font-size:30px;
     font-weight:800;
     color:#35ff9d;
 }
@@ -79,20 +88,62 @@ nav{
     color:white;
 }
 
-nav ul{
+nav{
     display:flex;
-    gap:35px;
-    list-style:none;
+    gap:18px;
 }
 
+/* НОВЫЕ КНОПКИ МЕНЮ */
+
 nav a{
+    position:relative;
+
+    padding:12px 20px;
+
     color:white;
     text-decoration:none;
-    transition:.3s;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(10px);
+
+    transition:.35s;
+}
+
+nav a::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(53,255,157,.18),
+    transparent
+    );
+
+    opacity:0;
+    transition:.35s;
 }
 
 nav a:hover{
+    transform:translateY(-3px);
+
     color:#35ff9d;
+
+    border-color:rgba(53,255,157,.35);
+
+    box-shadow:
+    0 0 25px rgba(53,255,157,.12);
+}
+
+nav a:hover::before{
+    opacity:1;
 }
 
 /* Главный экран */
@@ -102,7 +153,7 @@ nav a:hover{
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:0 8%;
+    padding:40px 8%;
     gap:60px;
 }
 
@@ -133,6 +184,9 @@ nav a:hover{
 }
 
 .btn{
+    display:inline-block;
+    text-decoration:none;
+
     padding:18px 34px;
     border:none;
     border-radius:50px;
@@ -173,13 +227,16 @@ nav a:hover{
     height:550px;
     border-radius:35px;
     overflow:hidden;
+
     backdrop-filter:blur(30px);
+
     background:
     linear-gradient(
     135deg,
     rgba(255,255,255,.08),
     rgba(255,255,255,.03)
     );
+
     border:1px solid rgba(255,255,255,.1);
 
     box-shadow:
@@ -252,15 +309,21 @@ nav a:hover{
 .stat{
     padding:30px;
     border-radius:25px;
+
     backdrop-filter:blur(20px);
+
     background:rgba(255,255,255,.05);
+
     border:1px solid rgba(255,255,255,.08);
+
     transition:.4s;
 }
 
 .stat:hover{
     transform:translateY(-10px);
-    box-shadow:0 0 30px rgba(53,255,157,.2);
+
+    box-shadow:
+    0 0 30px rgba(53,255,157,.2);
 }
 
 .stat h2{
@@ -301,6 +364,16 @@ nav a:hover{
 
 @media(max-width:1100px){
 
+header{
+    flex-direction:column;
+    gap:20px;
+}
+
+nav{
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
 .hero{
     flex-direction:column;
     text-align:center;
@@ -317,6 +390,7 @@ nav a:hover{
 .stats{
     grid-template-columns:repeat(2,1fr);
 }
+
 }
 
 @media(max-width:700px){
@@ -332,6 +406,12 @@ nav a:hover{
 .map{
     height:400px;
 }
+
+nav a{
+    padding:10px 14px;
+    font-size:14px;
+}
+
 }
 
 </style>
@@ -346,6 +426,7 @@ nav a:hover{
 <div class="particle p4">♻</div>
 <div class="particle p5">♻</div>
 
+<header>
 
 <div class="logo">
     EcoMap
@@ -359,67 +440,93 @@ nav a:hover{
     <a href="about.html">О проекте</a>
 </nav>
 
+</header>
+
 <section class="hero">
 
-    <div class="content">
+<div class="content">
 
-        <h1>
-            Цифровая карта
-            <span>вторичного сырья</span>
-        </h1>
+<h1>
+Цифровая карта
+<span>вторичного сырья</span>
+</h1>
 
-        <p>
-            Платформа нового поколения для экономики замкнутого цикла.
-            Размещайте ненужный пластик, макулатуру и технику на карте,
-            а переработчики и волонтеры смогут быстро найти и забрать их.
-        </p>
+<p>
+Платформа нового поколения для экономики замкнутого цикла.
+Размещайте ненужный пластик, макулатуру и технику на карте,
+а переработчики и волонтеры смогут быстро найти и забрать их.
+</p>
 
-        <div class="buttons">
-            <a href="login.html" class="btn btn-main">
-    Разместить отходы
+<div class="buttons">
+
+<a href="login.html" class="btn btn-main">
+Разместить отходы
 </a>
 
 <a href="map.html" class="btn btn-secondary">
-    Открыть карту
+Открыть карту
 </a>
 
-    </div>
+</div>
 
-    <div class="map-card">
+</div>
 
-        <div class="map">
-            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1200" alt="">
-        </div>
+<div class="map-card">
 
-        <div class="marker m1"></div>
-        <div class="marker m2"></div>
-        <div class="marker m3"></div>
+<div class="map">
+<img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1200" alt="">
+</div>
 
-    </div>
+<div class="marker m1"></div>
+<div class="marker m2"></div>
+<div class="marker m3"></div>
+
+</div>
 
 </section>
 
 <section class="stats">
 
-    <div class="stat">
-        <h2>12 458</h2>
-        <p>объявлений о вторсырье</p>
-    </div>
+<div class="stat">
+    <h2>12 458</h2>
 
-    <div class="stat">
-        <h2>1 245</h2>
-        <p>пунктов приема</p>
-    </div>
+    <p>
+        Пользователи платформы разместили более
+        12 тысяч объявлений о передаче пластика,
+        макулатуры, стекла и электроники
+        на переработку.
+    </p>
+</div>
 
-    <div class="stat">
-        <h2>87%</h2>
-        <p>успешно переработано</p>
-    </div>
+<div class="stat">
+    <h2>1 245</h2>
 
-    <div class="stat">
-        <h2>320 т</h2>
-        <p>собрано вторсырья</p>
-    </div>
+    <p>
+        На карте EcoMap отображаются пункты
+        приема вторсырья, волонтерские центры
+        и организации по переработке отходов.
+    </p>
+</div>
+
+<div class="stat">
+    <h2>320 т</h2>
+
+    <p>
+        Более 320 тонн вторичного сырья было
+        передано пользователями платформы
+        для дальнейшей переработки и повторного использования.
+    </p>
+</div>
+
+<div class="stat">
+    <h2>1 920 т</h2>
+
+    <p>
+        По расчетам платформы, переработка
+        собранного вторсырья позволила сократить
+        выбросы CO₂ почти на 1920 тонн.
+    </p>
+</div>
 
 </section>
 

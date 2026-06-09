@@ -184,3 +184,46 @@ h1 {
     width: 64px; /* Adjust size of the play button */
     height: 64px; /* Adjust size of the play button */
 }
+.leaflet-control-attribution{
+display:none !important;
+}
+.logout-btn{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding:14px 26px;
+
+background:
+linear-gradient(
+135deg,
+#35ff9d,
+#1fcf7a
+);
+
+color:#04100b;
+
+font-weight:700;
+
+text-decoration:none;
+
+border-radius:16px;
+
+box-shadow:
+0 0 25px rgba(53,255,157,.25);
+
+transition:.35s;
+
+}
+
+.logout-btn:hover{
+
+transform:
+translateY(-4px)
+scale(1.03);
+
+box-shadow:
+0 0 35px rgba(53,255,157,.45);
+
+}

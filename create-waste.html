@@ -6,6 +6,17 @@
 
 <title>Разместить отходы | EcoMap</title>
 
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+    <style>
+.leaflet-control-attribution,
+.leaflet-bottom.leaflet-right{
+display:none !important;
+}
+</style>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -21,30 +32,103 @@ body{
 background:#07120e;
 color:white;
 min-height:100vh;
+overflow-x:hidden;
 }
+
+/* Фон */
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 20% 20%,rgba(0,255,150,.22),transparent 30%),
+radial-gradient(circle at 80% 30%,rgba(0,200,255,.12),transparent 25%),
+radial-gradient(circle at 50% 80%,rgba(0,255,100,.12),transparent 35%);
+
+z-index:-2;
+}
+
+/* Header */
+
+header{
+padding:25px 8%;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+backdrop-filter:blur(20px);
+}
+
+.logo{
+font-size:30px;
+font-weight:800;
+color:#35ff9d;
+}
+
+.back{
+color:white;
+text-decoration:none;
+
+padding:12px 20px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+}
+
+.back:hover{
+color:#35ff9d;
+}
+
+/* Контейнер */
 
 .container{
-max-width:900px;
+max-width:950px;
 margin:auto;
-padding:50px 20px;
+padding:20px;
 }
 
-h1{
+/* Заголовок */
+
+.title{
 text-align:center;
 margin-bottom:40px;
-font-size:42px;
 }
+
+.title h1{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.title p{
+color:#b8c6c0;
+font-size:18px;
+}
+
+/* Форма */
 
 .form-box{
 padding:40px;
+
+border-radius:30px;
+
 background:rgba(255,255,255,.05);
-border-radius:25px;
-border:1px solid rgba(255,255,255,.1);
+
+border:1px solid rgba(255,255,255,.08);
+
 backdrop-filter:blur(20px);
 }
 
 .form-group{
-margin-bottom:20px;
+margin-bottom:22px;
 }
 
 label{
@@ -57,17 +141,19 @@ input,
 textarea,
 select{
 width:100%;
-padding:15px;
+
+padding:16px;
+
 border:none;
 outline:none;
-border-radius:15px;
-background:rgba(255,255,255,.08);
-color:white;
-font-size:15px;
-}
 
-select option{
-background:#102019;
+border-radius:16px;
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+font-size:15px;
 }
 
 textarea{
@@ -75,65 +161,124 @@ height:120px;
 resize:none;
 }
 
+option{
+background:#102019;
+}
+
+/* Карта */
+
+#map{
+height:350px;
+
+border-radius:25px;
+
+overflow:hidden;
+
+margin-top:20px;
+
+border:1px solid rgba(255,255,255,.1);
+}
+
+/* Инфо */
+
+.map-info{
+margin-top:15px;
+
+color:#35ff9d;
+
+font-size:14px;
+}
+
+/* Кнопка */
+
 .btn{
 width:100%;
+
 padding:18px;
-background:#35ff9d;
+
+margin-top:30px;
+
 border:none;
-border-radius:15px;
-font-size:16px;
+
+border-radius:18px;
+
+background:#35ff9d;
+
+color:#03100b;
+
+font-size:17px;
+
 font-weight:700;
+
 cursor:pointer;
+
 transition:.3s;
+
+box-shadow:
+0 0 25px rgba(53,255,157,.3);
 }
 
 .btn:hover{
 transform:translateY(-3px);
 }
 
-.map-preview{
-margin-top:25px;
-height:250px;
-border-radius:20px;
-background:
-linear-gradient(
-135deg,
-#0d1f17,
-#123024
-);
+/* Сообщение */
 
-display:flex;
-align-items:center;
-justify-content:center;
-
+.message{
+margin-top:20px;
+text-align:center;
 color:#35ff9d;
-font-size:22px;
 }
 
-.back{
-display:inline-block;
-margin-bottom:25px;
-color:#35ff9d;
-text-decoration:none;
+/* Leaflet fix */
+
+.leaflet-container{
+background:#0d1f17;
+}
+
+@media(max-width:700px){
+
+.title h1{
+font-size:34px;
+}
+
+.form-box{
+padding:25px;
+}
+
 }
 
 </style>
 </head>
 <body>
 
-<div class="container">
+<header>
+
+<div class="logo">
+EcoMap
+</div>
 
 <a href="cabinet.html" class="back">
-← Назад
+Назад
 </a>
+
+</header>
+
+<div class="container">
+
+<div class="title">
 
 <h1>
 ♻ Размещение вторсырья
 </h1>
 
-<div class="form-box">
+<p>
+Добавьте новое объявление и отметьте точку на карте
+</p>
 
-<form>
+</div>
+
+<div class="form-box">
 
 <div class="form-group">
 
@@ -142,13 +287,11 @@ text-decoration:none;
 </label>
 
 <select id="type">
-
 <option>Пластик</option>
 <option>Макулатура</option>
 <option>Стекло</option>
 <option>Металл</option>
 <option>Электроника</option>
-
 </select>
 
 </div>
@@ -160,8 +303,8 @@ text-decoration:none;
 </label>
 
 <input
-id="amount"
 type="text"
+id="amount"
 placeholder="Например: 25 кг"
 >
 
@@ -174,8 +317,8 @@ placeholder="Например: 25 кг"
 </label>
 
 <input
-id="address"
 type="text"
+id="address"
 placeholder="Введите адрес"
 >
 
@@ -204,61 +347,156 @@ placeholder="Опишите состояние отходов"
 
 </div>
 
-<div class="map-preview">
-📍 Здесь будет интерактивная карта
+<label>
+📍 Выберите точку на карте
+</label>
+
+<div id="map"></div>
+
+<div class="map-info" id="coords">
+Координаты не выбраны
 </div>
 
-<br>
-
-<button
-type="button"
-class="btn"
-onclick="saveWaste()"
->
+<button class="btn" onclick="saveWaste()">
 Опубликовать объявление
 </button>
 
-</form>
+<div class="message" id="message"></div>
 
 </div>
 
 </div>
+
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 <script>
 
+/* Карта */
+
+const map =
+L.map('map').setView([60.9397,76.5696],12);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+attribution:''
+}
+).addTo(map);
+
+let marker = null;
+
+let selectedLat = null;
+let selectedLng = null;
+
+/* Выбор точки */
+
+map.on('click',function(e){
+
+selectedLat = e.latlng.lat;
+selectedLng = e.latlng.lng;
+
+if(marker){
+map.removeLayer(marker);
+}
+
+marker =
+L.marker(e.latlng).addTo(map);
+
+document.getElementById('coords').innerHTML =
+'Выбраны координаты: ' +
+selectedLat.toFixed(5) +
+', ' +
+selectedLng.toFixed(5);
+
+});
+
+/* Сохранение */
+
 function saveWaste(){
+
+const type =
+document.getElementById('type').value;
+
+const amount =
+document.getElementById('amount').value;
+
+const address =
+document.getElementById('address').value;
+
+const description =
+document.getElementById('description').value;
+
+const message =
+document.getElementById('message');
+
+/* Проверка */
+
+if(
+!amount ||
+!address ||
+!description
+){
+message.innerHTML =
+'Заполните все поля';
+return;
+}
+
+if(
+selectedLat === null ||
+selectedLng === null
+){
+message.innerHTML =
+'Выберите точку на карте';
+return;
+}
+
+/* Объект */
 
 const waste = {
 
-type:
-document.getElementById('type').value,
+type,
+amount,
+address,
+description,
 
-amount:
-document.getElementById('amount').value,
-
-address:
-document.getElementById('address').value,
-
-description:
-document.getElementById('description').value,
+lat:selectedLat,
+lng:selectedLng,
 
 status:'Активно'
 
 };
 
+/* Получение массива */
+
 let wastes =
-JSON.parse(localStorage.getItem('wastes')) || [];
+JSON.parse(
+localStorage.getItem('wastes')
+) || [];
+
+/* Добавление */
 
 wastes.push(waste);
+
+/* Сохранение */
 
 localStorage.setItem(
 'wastes',
 JSON.stringify(wastes)
 );
 
-alert('Объявление опубликовано');
+message.innerHTML =
+'✅ Объявление успешно опубликовано';
 
-window.location.href='my-listings.html';
+/* Переход */
+
+setTimeout(()=>{
+
+window.location.href =
+'my-listings.html';
+
+},1200);
 
 }
 
