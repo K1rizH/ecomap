@@ -93,7 +93,7 @@ nav{
     gap:18px;
 }
 
-/* НОВЫЕ КНОПКИ МЕНЮ */
+/* Кнопки меню */
 
 nav a{
     position:relative;
@@ -329,11 +329,96 @@ nav a:hover::before{
 .stat h2{
     color:#35ff9d;
     font-size:42px;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
 .stat p{
     color:#c7d1cb;
+    line-height:1.7;
+}
+
+/* Footer */
+
+.footer{
+
+margin-top:80px;
+
+padding:60px 8% 30px;
+
+background:rgba(255,255,255,.04);
+
+backdrop-filter:blur(20px);
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.footer-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:40px;
+
+}
+
+.footer-block h3{
+
+margin-bottom:20px;
+
+font-size:24px;
+
+color:#35ff9d;
+
+}
+
+.footer-block p{
+
+color:#c7d1cb;
+
+line-height:1.8;
+
+margin-bottom:10px;
+
+}
+
+.footer-block a{
+
+display:block;
+
+margin-bottom:12px;
+
+color:#c7d1cb;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.footer-block a:hover{
+
+color:#35ff9d;
+
+transform:translateX(5px);
+
+}
+
+.footer-bottom{
+
+margin-top:40px;
+
+padding-top:25px;
+
+text-align:center;
+
+color:#9fb0a7;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+font-size:14px;
+
 }
 
 /* Плавающие частицы */
@@ -529,6 +614,52 @@ nav a{
 </div>
 
 </section>
+
+<footer class="footer">
+
+<div class="footer-container">
+
+<div class="footer-block">
+
+<h3>EcoMap</h3>
+
+<p>
+Цифровая платформа для размещения и поиска вторичного сырья.
+Проект направлен на развитие экономики замкнутого цикла
+и упрощение взаимодействия между людьми, волонтерами
+и переработчиками.
+</p>
+
+</div>
+
+<div class="footer-block">
+
+<h3>Контакты</h3>
+
+<p>📍 Нижневартовск, ХМАО</p>
+<p>📞 +7 (922) 123-45-67</p>
+<p>✉ eco-map@mail.ru</p>
+
+</div>
+
+<div class="footer-block">
+
+<h3>Навигация</h3>
+
+<a href="index.html">Главная</a>
+<a href="map.html">Карта</a>
+<a href="about.html">О проекте</a>
+<a href="login.html">Авторизация</a>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 EcoMap — Сервис мониторинга вторичного сырья
+</div>
+
+</footer>
 
 </body>
 </html>
