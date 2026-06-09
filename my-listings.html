@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <script>
-
-if(localStorage.getItem('loggedIn') !== 'true'){
-
-alert('Сначала войдите в аккаунт');
-
-window.location.href = 'login.html';
-
-}
-
-</script>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Мои объявления | EcoMap</title>
 
@@ -30,130 +20,317 @@ font-family:Montserrat,sans-serif;
 body{
 background:#07120e;
 color:white;
-padding:50px;
 min-height:100vh;
+padding:50px 8%;
+overflow-x:hidden;
 }
 
-h1{
-margin-bottom:35px;
-font-size:42px;
+/* Фон */
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 20% 20%,rgba(0,255,150,.15),transparent 30%),
+radial-gradient(circle at 80% 30%,rgba(0,200,255,.10),transparent 25%),
+radial-gradient(circle at 50% 80%,rgba(0,255,100,.10),transparent 35%);
+
+z-index:-2;
 }
 
-.top{
+/* Header */
+
+.header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+margin-bottom:50px;
 }
 
-.btn{
-padding:14px 22px;
-border-radius:15px;
+.logo{
+font-size:34px;
+font-weight:800;
+color:#35ff9d;
+}
+
+.back{
+padding:14px 24px;
+
+border-radius:14px;
+
 background:#35ff9d;
-color:#03100b;
-text-decoration:none;
-font-weight:700;
-}
 
-.card{
-background:rgba(255,255,255,.05);
-padding:25px;
-margin-bottom:20px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
+color:#04100b;
+
+text-decoration:none;
+
+font-weight:700;
+
 transition:.3s;
 }
 
+.back:hover{
+transform:translateY(-3px);
+}
+
+/* Заголовок */
+
+h1{
+font-size:52px;
+margin-bottom:40px;
+}
+
+/* Карточки */
+
+.listings{
+display:grid;
+gap:25px;
+}
+
+.card{
+
+background:rgba(255,255,255,.05);
+
+padding:30px;
+
+border-radius:25px;
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+transition:.3s;
+
+}
+
 .card:hover{
-transform:translateY(-5px);
-box-shadow:0 0 20px rgba(53,255,157,.15);
+
+transform:translateY(-6px);
+
+box-shadow:
+0 0 25px rgba(53,255,157,.12);
+
 }
 
 .card h3{
+font-size:28px;
+margin-bottom:15px;
 color:#35ff9d;
-margin-bottom:12px;
-font-size:24px;
 }
 
 .card p{
-margin-bottom:8px;
-color:#d4ddd8;
+margin-bottom:10px;
+line-height:1.7;
+color:#d0dad5;
 }
+
+/* Статус */
 
 .status{
 display:inline-block;
-margin-top:10px;
-padding:8px 14px;
-border-radius:12px;
-background:rgba(53,255,157,.15);
-color:#35ff9d;
+
+padding:8px 16px;
+
+border-radius:30px;
+
+font-size:14px;
+
 font-weight:700;
+
+margin-top:10px;
 }
 
+.active{
+background:rgba(53,255,157,.15);
+color:#35ff9d;
+}
+
+.taken{
+background:rgba(255,180,0,.15);
+color:#ffb700;
+}
+
+.done{
+background:rgba(0,200,255,.15);
+color:#3fd8ff;
+}
+
+/* Кнопки */
+
+.actions{
+display:flex;
+gap:15px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.btn{
+
+padding:13px 20px;
+
+border:none;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+.take-btn{
+background:#ffb700;
+color:#04100b;
+}
+
+.done-btn{
+background:#35ff9d;
+color:#04100b;
+}
+
+.delete-btn{
+background:#ff4b4b;
+color:white;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+}
+
+/* Пусто */
+
 .empty{
-opacity:.6;
-font-size:18px;
+text-align:center;
+font-size:22px;
+color:#b8c6c0;
+margin-top:80px;
 }
 
 </style>
+
+<script>
+
+if(localStorage.getItem('loggedIn') !== 'true'){
+
+window.location.href = 'login.html';
+
+}
+
+</script>
+
 </head>
 <body>
 
-<div class="top">
+<div class="header">
+
+<div class="logo">
+EcoMap
+</div>
+
+<a href="cabinet.html" class="back">
+Назад
+</a>
+
+</div>
 
 <h1>
 📦 Мои объявления
 </h1>
 
-<a href="create-waste.html" class="btn">
-+ Добавить
-</a>
-
-</div>
-
-<div id="list"></div>
+<div class="listings" id="listings"></div>
 
 <script>
 
-const list =
-document.getElementById('list');
-
-const wastes =
+let wastes =
 JSON.parse(localStorage.getItem('wastes')) || [];
+
+const container =
+document.getElementById('listings');
+
+/* Отрисовка */
+
+function renderListings(){
+
+container.innerHTML = '';
 
 if(wastes.length === 0){
 
-list.innerHTML = `
-<p class="empty">
+container.innerHTML = `
+<div class="empty">
 У вас пока нет объявлений
-</p>
+</div>
 `;
 
-}else{
+return;
 
-wastes.forEach(item => {
+}
 
-list.innerHTML += `
+wastes.forEach((item,index)=>{
+
+let statusClass = 'active';
+
+if(item.status === 'Забронировано'){
+statusClass = 'taken';
+}
+
+if(item.status === 'Передано'){
+statusClass = 'done';
+}
+
+container.innerHTML += `
 
 <div class="card">
 
-<h3>${item.type}</h3>
+<h3>
+${item.type}
+</h3>
 
 <p>
-Количество: ${item.amount}
+<b>Количество:</b>
+${item.amount}
 </p>
 
 <p>
-Адрес: ${item.address}
+<b>Адрес:</b>
+${item.address}
 </p>
 
 <p>
+<b>Описание:</b>
 ${item.description}
 </p>
 
-<div class="status">
+<div class="status ${statusClass}">
 ${item.status}
+</div>
+
+<div class="actions">
+
+<button
+class="btn take-btn"
+onclick="setStatus(${index}, 'Забронировано')"
+>
+Забронировано
+</button>
+
+<button
+class="btn done-btn"
+onclick="setStatus(${index}, 'Передано')"
+>
+Передано
+</button>
+
+<button
+class="btn delete-btn"
+onclick="deleteWaste(${index})"
+>
+Удалить
+</button>
+
 </div>
 
 </div>
@@ -163,6 +340,42 @@ ${item.status}
 });
 
 }
+
+/* Изменение статуса */
+
+function setStatus(index,status){
+
+wastes[index].status = status;
+
+localStorage.setItem(
+'wastes',
+JSON.stringify(wastes)
+);
+
+renderListings();
+
+}
+
+/* Удаление */
+
+function deleteWaste(index){
+
+if(confirm('Удалить объявление?')){
+
+wastes.splice(index,1);
+
+localStorage.setItem(
+'wastes',
+JSON.stringify(wastes)
+);
+
+renderListings();
+
+}
+
+}
+
+renderListings();
 
 </script>
 
