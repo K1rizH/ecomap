@@ -533,74 +533,7 @@ window.location.href =
 
 }
 
-/* Проверка */
 
-if(
-!amount ||
-!address ||
-!description
-){
-message.innerHTML =
-'Заполните все поля';
-return;
-}
-
-if(
-selectedLat === null ||
-selectedLng === null
-){
-message.innerHTML =
-'Выберите точку на карте';
-return;
-}
-
-/* Объект */
-
-const waste = {
-
-type,
-amount,
-address,
-description,
-
-lat:selectedLat,
-lng:selectedLng,
-
-status:'Активно'
-
-};
-
-/* Получение массива */
-
-let wastes =
-JSON.parse(
-localStorage.getItem('wastes')
-) || [];
-
-/* Добавление */
-
-wastes.push(waste);
-
-/* Сохранение */
-
-localStorage.setItem(
-'wastes',
-JSON.stringify(wastes)
-);
-
-message.innerHTML =
-'✅ Объявление успешно опубликовано';
-
-/* Переход */
-
-setTimeout(()=>{
-
-window.location.href =
-'my-listings.html';
-
-},1200);
-
-}
 
 </script>
 
