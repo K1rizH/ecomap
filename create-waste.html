@@ -261,6 +261,23 @@ padding:25px;
 
 </style>
 </head>
+    <script type="module">
+
+import { db } from './firebase.js';
+
+import {
+collection,
+addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+window.db = db;
+window.addDoc = addDoc;
+window.collection = collection;
+
+console.log("Firebase подключен");
+
+</script>
 <body>
 
 <header>
@@ -429,7 +446,7 @@ selectedLng.toFixed(5);
 
 /* Сохранение */
 
-function saveWaste(){
+async function saveWaste(){
 
 const type =
 document.getElementById('type').value;
@@ -490,7 +507,7 @@ saveData('');
 
 }
 
-function saveData(photo){
+async function saveData(photo){
 
 const waste = {
 
@@ -507,16 +524,9 @@ status:'Активно'
 
 };
 
-let wastes =
-JSON.parse(
-localStorage.getItem('wastes')
-) || [];
-
-wastes.push(waste);
-
-localStorage.setItem(
-'wastes',
-JSON.stringify(wastes)
+await addDoc(
+collection(window.db, "wastes"),
+waste
 );
 
 message.innerHTML =
