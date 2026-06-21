@@ -336,13 +336,28 @@ L.marker([item.lat,item.lng])
 
 <h3>${item.type}</h3>
 
-Количество: ${item.amount}<br>
+${item.photo ? `
+<img
+src="${item.photo}"
+style="
+width:220px;
+max-height:150px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:10px;
+display:block;
+">
+` : ''}
 
-Статус: ${item.status || 'Доступно'}
+<b>Количество:</b> ${item.amount}<br>
+
+${item.address ? `<b>Адрес:</b> ${item.address}<br>` : ''}
+
+${item.description ? `<b>Описание:</b> ${item.description}<br>` : ''}
+
+<b>Статус:</b> ${item.status || 'Доступно'}
 
 `);
-
-});
 
 /* Добавление новой точки кликом */
 

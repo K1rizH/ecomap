@@ -354,7 +354,11 @@ placeholder="Опишите состояние отходов"
 Фотография
 </label>
 
-<input type="file">
+<input
+type="file"
+id="photo"
+accept="image/*"
+>
 
 </div>
 
@@ -439,8 +443,95 @@ document.getElementById('address').value;
 const description =
 document.getElementById('description').value;
 
+const photoInput =
+document.getElementById('photo');
+
 const message =
 document.getElementById('message');
+
+if(
+!amount ||
+!address ||
+!description
+){
+message.innerHTML =
+'Заполните все поля';
+return;
+}
+
+if(
+selectedLat === null ||
+selectedLng === null
+){
+message.innerHTML =
+'Выберите точку на карте';
+return;
+}
+
+/* если фото выбрано */
+
+if(photoInput.files.length > 0){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+saveData(e.target.result);
+
+};
+
+reader.readAsDataURL(
+photoInput.files[0]
+);
+
+}else{
+
+saveData('');
+
+}
+
+function saveData(photo){
+
+const waste = {
+
+type,
+amount,
+address,
+description,
+photo,
+
+lat:selectedLat,
+lng:selectedLng,
+
+status:'Активно'
+
+};
+
+let wastes =
+JSON.parse(
+localStorage.getItem('wastes')
+) || [];
+
+wastes.push(waste);
+
+localStorage.setItem(
+'wastes',
+JSON.stringify(wastes)
+);
+
+message.innerHTML =
+'✅ Объявление успешно опубликовано';
+
+setTimeout(()=>{
+
+window.location.href =
+'my-listings.html';
+
+},1200);
+
+}
+
+}
 
 /* Проверка */
 

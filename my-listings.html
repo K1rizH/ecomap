@@ -25,8 +25,6 @@ padding:50px 8%;
 overflow-x:hidden;
 }
 
-/* Фон */
-
 body::before{
 content:'';
 position:fixed;
@@ -40,8 +38,6 @@ radial-gradient(circle at 50% 80%,rgba(0,255,100,.10),transparent 35%);
 
 z-index:-2;
 }
-
-/* Header */
 
 .header{
 display:flex;
@@ -58,17 +54,11 @@ color:#35ff9d;
 
 .back{
 padding:14px 24px;
-
 border-radius:14px;
-
 background:#35ff9d;
-
 color:#04100b;
-
 text-decoration:none;
-
 font-weight:700;
-
 transition:.3s;
 }
 
@@ -76,14 +66,10 @@ transition:.3s;
 transform:translateY(-3px);
 }
 
-/* Заголовок */
-
 h1{
 font-size:52px;
 margin-bottom:40px;
 }
-
-/* Карточки */
 
 .listings{
 display:grid;
@@ -91,28 +77,17 @@ gap:25px;
 }
 
 .card{
-
 background:rgba(255,255,255,.05);
-
 padding:30px;
-
 border-radius:25px;
-
 border:1px solid rgba(255,255,255,.08);
-
 backdrop-filter:blur(15px);
-
 transition:.3s;
-
 }
 
 .card:hover{
-
 transform:translateY(-6px);
-
-box-shadow:
-0 0 25px rgba(53,255,157,.12);
-
+box-shadow:0 0 25px rgba(53,255,157,.12);
 }
 
 .card h3{
@@ -127,19 +102,21 @@ line-height:1.7;
 color:#d0dad5;
 }
 
-/* Статус */
+.waste-photo{
+width:100%;
+max-height:300px;
+object-fit:cover;
+border-radius:18px;
+margin-bottom:20px;
+border:1px solid rgba(255,255,255,.1);
+}
 
 .status{
 display:inline-block;
-
 padding:8px 16px;
-
 border-radius:30px;
-
 font-size:14px;
-
 font-weight:700;
-
 margin-top:10px;
 }
 
@@ -158,8 +135,6 @@ background:rgba(0,200,255,.15);
 color:#3fd8ff;
 }
 
-/* Кнопки */
-
 .actions{
 display:flex;
 gap:15px;
@@ -168,17 +143,11 @@ flex-wrap:wrap;
 }
 
 .btn{
-
 padding:13px 20px;
-
 border:none;
-
 border-radius:14px;
-
 font-weight:700;
-
 cursor:pointer;
-
 transition:.3s;
 }
 
@@ -201,8 +170,6 @@ color:white;
 transform:translateY(-3px);
 }
 
-/* Пусто */
-
 .empty{
 text-align:center;
 font-size:22px;
@@ -215,9 +182,7 @@ margin-top:80px;
 <script>
 
 if(localStorage.getItem('loggedIn') !== 'true'){
-
 window.location.href = 'login.html';
-
 }
 
 </script>
@@ -250,8 +215,6 @@ JSON.parse(localStorage.getItem('wastes')) || [];
 
 const container =
 document.getElementById('listings');
-
-/* Отрисовка */
 
 function renderListings(){
 
@@ -288,6 +251,13 @@ container.innerHTML += `
 <h3>
 ${item.type}
 </h3>
+
+${item.photo ? `
+<img
+src="${item.photo}"
+class="waste-photo"
+alt="Фото объявления">
+` : ''}
 
 <p>
 <b>Количество:</b>
@@ -341,8 +311,6 @@ onclick="deleteWaste(${index})"
 
 }
 
-/* Изменение статуса */
-
 function setStatus(index,status){
 
 wastes[index].status = status;
@@ -355,8 +323,6 @@ JSON.stringify(wastes)
 renderListings();
 
 }
-
-/* Удаление */
 
 function deleteWaste(index){
 
