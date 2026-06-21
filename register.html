@@ -202,18 +202,32 @@ EcoMap
 
 </div>
 
-<script>
+<script type="module">
 
-function register(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-const name =
-document.getElementById('name').value.trim();
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNn0HaZLX-21vNSnXhxZ8CUPS-uxQDFE8",
+  authDomain: "ecomap-611ab.firebaseapp.com",
+  projectId: "ecomap-611ab",
+  storageBucket: "ecomap-611ab.firebasestorage.app",
+  messagingSenderId: "548409473929",
+  appId: "1:548409473929:web:ea360b0256a5414542bf58"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.register = async function(){
 
 const email =
 document.getElementById('email').value.trim();
-
-const phone =
-document.getElementById('phone').value.trim();
 
 const password =
 document.getElementById('password').value.trim();
@@ -221,65 +235,27 @@ document.getElementById('password').value.trim();
 const message =
 document.getElementById('message');
 
-/* Проверка заполнения */
+try{
 
-if(
-!name ||
-!email ||
-!phone ||
-!password
-){
-message.innerHTML =
-'Заполните все поля';
-return;
-}
-
-/* Проверка email */
-
-const emailPattern =
-/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-if(!emailPattern.test(email)){
-message.innerHTML =
-'Введите корректный email';
-return;
-}
-
-/* Проверка пароля */
-
-if(password.length < 6){
-message.innerHTML =
-'Пароль должен содержать минимум 6 символов';
-return;
-}
-
-/* Создание пользователя */
-
-const user = {
-name,
+await createUserWithEmailAndPassword(
+auth,
 email,
-phone,
 password
-};
-
-/* Сохранение */
-
-localStorage.setItem(
-'ecomap_user',
-JSON.stringify(user)
 );
 
 message.innerHTML =
-'✅ Аккаунт успешно создан';
-
-/* Переход */
+'✅ Аккаунт создан';
 
 setTimeout(()=>{
+window.location.href='login.html';
+},1000);
 
-window.location.href =
-'login.html';
+}catch(error){
 
-},1500);
+message.innerHTML =
+error.message;
+
+}
 
 }
 

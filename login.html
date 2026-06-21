@@ -208,9 +208,29 @@ placeholder="Пароль"
 
 </div>
 
-<script>
+<script type="module">
 
-function login(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNn0HaZLX-21vNSnXhxZ8CUPS-uxQDFE8",
+  authDomain: "ecomap-611ab.firebaseapp.com",
+  projectId: "ecomap-611ab",
+  storageBucket: "ecomap-611ab.firebasestorage.app",
+  messagingSenderId: "548409473929",
+  appId: "1:548409473929:web:ea360b0256a5414542bf58"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function(){
 
 const email =
 document.getElementById('email').value.trim();
@@ -221,18 +241,13 @@ document.getElementById('password').value.trim();
 const message =
 document.getElementById('message');
 
-const savedUser =
-JSON.parse(
-localStorage.getItem('ecomap_user')
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
 );
-
-/* Проверка */
-
-if(
-savedUser &&
-savedUser.email === email &&
-savedUser.password === password
-){
 
 localStorage.setItem(
 'loggedIn',
@@ -243,13 +258,10 @@ message.innerHTML =
 '✅ Успешный вход';
 
 setTimeout(()=>{
-
-window.location.href =
-'cabinet.html';
-
+window.location.href='cabinet.html';
 },1000);
 
-}else{
+}catch(error){
 
 message.innerHTML =
 '❌ Неверный логин или пароль';

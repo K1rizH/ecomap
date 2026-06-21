@@ -246,14 +246,33 @@ onclick="window.location.href='create-waste.html'"
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<script>
+<script type="module">
 
-/* Создание карты */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNn0HaZLX-21vNSnXhxZ8CUPS-uxQDFE8",
+  authDomain: "ecomap-611ab.firebaseapp.com",
+  projectId: "ecomap-611ab",
+  storageBucket: "ecomap-611ab.firebasestorage.app",
+  messagingSenderId: "548409473929",
+  appId: "1:548409473929:web:ea360b0256a5414542bf58",
+  measurementId: "G-SCZQP8TQ87"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* Карта */
 
 const map =
 L.map('map').setView([60.9397, 76.5696], 12);
-
-/* Слой карты */
 
 L.tileLayer(
 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -262,7 +281,7 @@ attribution:''
 }
 ).addTo(map);
 
-/* Стандартные объявления */
+/* Стандартные точки */
 
 const defaultWastes = [
 
@@ -280,53 +299,34 @@ lng:76.5842,
 type:'Макулатура',
 amount:'40 кг',
 status:'Доступно'
-},
-
-{
-lat:60.9318,
-lng:76.5510,
-type:'Электроника',
-amount:'12 кг',
-status:'Доступно'
-},
-
-{
-lat:60.9441,
-lng:76.6035,
-type:'Стекло',
-amount:'18 кг',
-status:'Доступно'
 }
 
 ];
 
-/* Пользовательские объявления */
+/* Рисуем стандартные */
 
-const savedWastes =
-JSON.parse(localStorage.getItem('wastes')) || [];
+defaultWastes.forEach(item => {
 
-/* Объединяем */
+L.marker([item.lat,item.lng])
+.addTo(map)
+.bindPopup(`
+<h3>${item.type}</h3>
+Количество: ${item.amount}<br>
+Статус: ${item.status}
+`);
 
-const wastes = [
-...defaultWastes,
-...savedWastes
-];
+});
 
-/* Отрисовка точек */
+/* Загружаем из Firestore */
 
-wastes.forEach(item=>{
+const snapshot =
+await getDocs(collection(db, "wastes"));
 
-/* Если координат нет */
+snapshot.forEach(doc => {
 
-if(!item.lat || !item.lng){
+const item = doc.data();
 
-item.lat =
-60.93 + Math.random() * 0.03;
-
-item.lng =
-76.55 + Math.random() * 0.05;
-
-}
+if(!item.lat || !item.lng) return;
 
 L.marker([item.lat,item.lng])
 
@@ -355,27 +355,22 @@ ${item.address ? `<b>Адрес:</b> ${item.address}<br>` : ''}
 
 ${item.description ? `<b>Описание:</b> ${item.description}<br>` : ''}
 
-<b>Статус:</b> ${item.status || 'Доступно'}
+<b>Статус:</b> ${item.status || 'Активно'}
 
 `);
 
 });
 
-/* Добавление новой точки кликом */
+/* Клик по карте */
 
-map.on('click',function(e){
+map.on('click', function(e){
 
 L.marker(e.latlng)
-
 .addTo(map)
-
-.bindPopup(
-`
+.bindPopup(`
 <h3>Новая точка</h3>
 Точка размещения отходов
-`
-)
-
+`)
 .openPopup();
 
 });

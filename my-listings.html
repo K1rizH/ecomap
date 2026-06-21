@@ -208,13 +208,42 @@ EcoMap
 
 <div class="listings" id="listings"></div>
 
-<script>
+<script type="module">
 
-let wastes =
-JSON.parse(localStorage.getItem('wastes')) || [];
+import { db } from './firebase.js';
+
+import {
+collection,
+getDocs,
+doc,
+deleteDoc,
+updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const container =
 document.getElementById('listings');
+
+let wastes = [];
+
+async function loadListings(){
+
+const snapshot =
+await getDocs(collection(db,"wastes"));
+
+wastes = [];
+
+snapshot.forEach(document=>{
+
+wastes.push({
+id:document.id,
+...document.data()
+});
+
+});
+
+renderListings();
+
+}
 
 function renderListings(){
 
@@ -248,9 +277,7 @@ container.innerHTML += `
 
 <div class="card">
 
-<h3>
-${item.type}
-</h3>
+<h3>${item.type}</h3>
 
 ${item.photo ? `
 <img
@@ -282,21 +309,21 @@ ${item.status}
 
 <button
 class="btn take-btn"
-onclick="setStatus(${index}, 'Забронировано')"
+onclick="setStatus('${item.id}','Забронировано')"
 >
 Забронировано
 </button>
 
 <button
 class="btn done-btn"
-onclick="setStatus(${index}, 'Передано')"
+onclick="setStatus('${item.id}','Передано')"
 >
 Передано
 </button>
 
 <button
 class="btn delete-btn"
-onclick="deleteWaste(${index})"
+onclick="deleteWaste('${item.id}')"
 >
 Удалить
 </button>
@@ -311,37 +338,34 @@ onclick="deleteWaste(${index})"
 
 }
 
-function setStatus(index,status){
+window.setStatus = async function(id,status){
 
-wastes[index].status = status;
-
-localStorage.setItem(
-'wastes',
-JSON.stringify(wastes)
+await updateDoc(
+doc(db,"wastes",id),
+{
+status:status
+}
 );
 
-renderListings();
+loadListings();
 
 }
 
-function deleteWaste(index){
+window.deleteWaste = async function(id){
 
 if(confirm('Удалить объявление?')){
 
-wastes.splice(index,1);
-
-localStorage.setItem(
-'wastes',
-JSON.stringify(wastes)
+await deleteDoc(
+doc(db,"wastes",id)
 );
 
-renderListings();
+loadListings();
 
 }
 
 }
 
-renderListings();
+loadListings();
 
 </script>
 
